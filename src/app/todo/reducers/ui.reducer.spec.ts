@@ -1,10 +1,10 @@
-import { uiReducer, initialState } from './ui.reducer';
-import { loadTodos, loadTodosSuccess, loadTodosFailed } from '../actions/todo.actions';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from "@angular/common/http";
+import { loadTodos, loadTodosFailed, loadTodosSuccess } from "../actions/todo.actions";
+import { initialState, uiReducer } from "./ui.reducer";
 
-describe('[Todo] Ui Reducer', () => {
-  describe('LoadTodos', () => {
-    it('should mark loading', () => {
+describe("[Todo] Ui Reducer", () => {
+  describe("LoadTodos", () => {
+    it("should mark loading", () => {
       const action = loadTodos;
 
       const result = uiReducer(initialState, action);
@@ -12,8 +12,8 @@ describe('[Todo] Ui Reducer', () => {
       expect(result.todoStatus.loading).toBe(true);
     });
   });
-  describe('LoadTodosSuccess', () => {
-    it('should clear loading and error', () => {
+  describe("LoadTodosSuccess", () => {
+    it("should clear loading and error", () => {
       const action = loadTodosSuccess;
 
       const result = uiReducer(initialState, action);
@@ -24,8 +24,8 @@ describe('[Todo] Ui Reducer', () => {
     });
   });
 
-  describe('LoadTodosFailure', () => {
-    it('should clear loading and set error', () => {
+  describe("LoadTodosFailure", () => {
+    it("should clear loading and set error", () => {
       const error = new HttpErrorResponse({status: 500});
       const action = loadTodosFailed;
 

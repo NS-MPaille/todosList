@@ -1,19 +1,19 @@
-import { ActionReducerMap } from '@ngrx/store';
-import {todoReducer, TodoState} from "./todo.reducer";
-import {uiReducer, UiState} from "./ui.reducer";
+import { ActionReducerMap } from "@ngrx/store";
+import {todoReducer, ITodoState} from "./todo.reducer";
+import {uiReducer, IUiState} from "./ui.reducer";
 
-export const todoFeatureKey = 'module-todo';
+export const todoFeatureKey = "module-todo";
 
-export interface ModuleTodoState {
-    ui: UiState
-    todo: TodoState
+export interface IModuleTodoState {
+    ui: IUiState;
+    todo: ITodoState;
 }
 
-export interface State {
-    [todoFeatureKey]: ModuleTodoState
+export interface IState {
+    [todoFeatureKey]: IModuleTodoState;
 }
 
-export const moduleTodoReducer: ActionReducerMap<ModuleTodoState> = {
+export const moduleTodoReducer: ActionReducerMap<IModuleTodoState> = {
     ui: uiReducer,
-    todo: todoReducer
+    todo: todoReducer,
 };

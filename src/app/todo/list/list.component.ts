@@ -1,44 +1,44 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import {Todo} from "../todo-api.service";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Update } from "@ngrx/entity";
+import { Store } from "@ngrx/store";
 import {Observable} from "rxjs";
-import {State} from "../reducers";
-import { Store } from '@ngrx/store';
-import {getTodos, getTodosStatus} from "../selectors";
-import {Status} from "../reducers/ui.reducer";
 import {deleteTodo, updateTodo} from "../actions/todo.actions";
-import { Update } from '@ngrx/entity';
+import {IState} from "../reducers";
+import {IStatus} from "../reducers/ui.reducer";
+import {getTodos, getTodosStatus} from "../selectors";
+import {ITodo} from "../todo-api.service";
 
 @Component({
-  selector: 'app-todo-list',
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.css']
+  selector: "app-todo-list",
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.css"],
 })
 export class ListComponent implements OnInit {
 
-  todo$: Observable<Todo[]>;
-  todoStatus$: Observable<Status>;
+  public todo$: Observable<ITodo[]>;
+  public todoStatus$: Observable<IStatus>;
 
-  constructor(private store: Store<State>) {
+  constructor(private store: Store<IState>) {
     this.todo$ = this.store.select(getTodos);
     this.todoStatus$ = this.store.select(getTodosStatus);
   }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
-  onDelete(todo: Todo) {
+  public onDelete(todo: ITodo) {
     this.store.dispatch(deleteTodo({id: todo.id}));
   }
 
-  onDone(todo: Todo) {
-    const todoUpdate: Update<Todo> = {
+  public onDone(todo: ITodo) {
+    const todoUpdate: Update<ITodo> = {
       id: todo.id,
-      changes: {completed : !todo.completed}
+      changes: {completed : !todo.completed},
     };
     this.store.dispatch(updateTodo({todoUpdate}));
   }
 
-  trackByTodo(_idx: number, todo: Todo) {
+  public trackByTodo(_idx: number, todo: ITodo) {
     return todo.id;
   }
 

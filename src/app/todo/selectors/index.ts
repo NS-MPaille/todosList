@@ -1,37 +1,37 @@
-import {ModuleTodoState, todoFeatureKey} from "../reducers";
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import {getAllTodos, getTodosIds, getTodoEntities} from "../reducers/todo.reducer";
+import { createFeatureSelector, createSelector } from "@ngrx/store";
+import {IModuleTodoState, todoFeatureKey} from "../reducers";
+import {getAllTodos, getTodoEntities, getTodosIds} from "../reducers/todo.reducer";
 
-export const getModuleTodoState = createFeatureSelector<ModuleTodoState>(todoFeatureKey);
+export const getModuleTodoState = createFeatureSelector<IModuleTodoState>(todoFeatureKey);
 
 export const getUiState = createSelector(
     getModuleTodoState,
-    state => state.ui
+    (state) => state.ui,
 );
 
 export const getTodoState = createSelector(
     getModuleTodoState,
-    state => state.todo
+    (state) => state.todo,
 );
 
 // UI
 export const getTodosStatus = createSelector(
     getUiState,
-    uiState => uiState.todoStatus
+    (uiState) => uiState.todoStatus,
 );
 
 // Data
 export const getTodos = createSelector(
     getTodoState,
-    getAllTodos
+    getAllTodos,
 );
 
 export const getTodoIds = createSelector(
     getTodoState,
-    getTodosIds
+    getTodosIds,
 );
 
 export const getTodoById = createSelector(
     getTodoState,
-    getTodoEntities
+    getTodoEntities,
 );

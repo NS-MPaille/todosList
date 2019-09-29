@@ -1,40 +1,40 @@
-import { Injectable } from '@angular/core';
-import { Actions, Effect, createEffect, ofType } from '@ngrx/effects';
+import { Injectable } from "@angular/core";
+import { Actions, createEffect, Effect, ofType } from "@ngrx/effects";
 
-import { catchError, map, switchMap, mergeMap, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
-import { TodoApiService } from '../todo-api.service';
+import { of } from "rxjs";
+import { catchError, map, mergeMap, switchMap, tap } from "rxjs/operators";
 import {
+  loadTodo,
+  loadTodoFailed,
   loadTodos,
   loadTodosFailed,
   loadTodosSuccess,
-  loadTodo,
   loadTodoSuccess,
-  loadTodoFailed
-} from '../actions/todo.actions';
+} from "../actions/todo.actions";
+import { TodoApiService } from "../todo-api.service";
 
 @Injectable()
 export class TodoEffects {
-  
-  loadTodos$ = createEffect(() =>
+
+  public loadTodos$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loadTodos),
       switchMap(() => this.todoApi.getList()),
-      map(todos => loadTodosSuccess({ data: todos })),
-      catchError(error => of(loadTodosFailed({ error })))
-    )
+      map((todos) => loadTodosSuccess({ data: todos })),
+      catchError((error) => of(loadTodosFailed({ error }))),
+    ),
   );
 
-  loadTodo$ = createEffect(() =>
+  public loadTodo$ = createEffect(() =>
   this.actions$.pipe(
       ofType(loadTodo),
-      mergeMap(action =>
+      mergeMap((action) =>
         this.todoApi.getTodo(action.id).pipe(
-          map(todo => loadTodoSuccess({ data: todo })),
-          catchError(error => of(loadTodoFailed({ error })))
-        )
-      )
-    )
+          map((todo) => loadTodoSuccess({ data: todo })),
+          catchError((error) => of(loadTodoFailed({ error }))),
+        ),
+      ),
+    ),
   );
 
   constructor(private actions$: Actions, private todoApi: TodoApiService) {}

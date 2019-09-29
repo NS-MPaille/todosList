@@ -1,9 +1,12 @@
-import {createReducer, on} from '@ngrx/store';
-import {loadTodos, loadTodosFailed, loadTodosSuccess, loadTodoFailed, loadTodoSuccess, loadTodo} from '../actions/todo.actions';
-import {Action} from '@ngrx/store';
-import { Todo } from '../todo-api.service';
+import {createReducer, on} from "@ngrx/store";
+import {Action} from "@ngrx/store";
+import {
+    loadTodo, loadTodoFailed, loadTodos,
+    loadTodosFailed, loadTodosSuccess, loadTodoSuccess
+} from "../actions/todo.actions";
+import { ITodo } from "../todo-api.service";
 
-export interface Status {
+export interface IStatus {
     loading: boolean;
     error: Error | null;
     loaded: boolean;
@@ -11,34 +14,34 @@ export interface Status {
     errorTodoById: Error | null;
 }
 
-export interface UiState {
-    todoStatus: Status
+export interface IUiState {
+    todoStatus: IStatus;
 }
 
-export const initialState: UiState = {
+export const initialState: IUiState = {
     todoStatus: {
         loading: false,
         loaded: false,
         loadingTodoById: false,
         errorTodoById: null,
-        error: null
-    }
+        error: null,
+    },
 };
 
-const reducer = createReducer(initialState, 
-    on(loadTodos, state => {
+const reducer = createReducer(initialState,
+    on(loadTodos, (state) => {
         return {
             ...state,
             todoStatus: {
                 loading: true,
                 error: null,
                 loaded: false,
-                loadingTodoById:false,
-                errorTodoById: null
-            }
-        }
+                loadingTodoById: false,
+                errorTodoById: null,
+            },
+        };
     }),
-    on(loadTodosSuccess, state => {
+    on(loadTodosSuccess, (state) => {
         return {
             ...state,
             todoStatus: {
@@ -46,9 +49,9 @@ const reducer = createReducer(initialState,
                 error: null,
                 loaded: true,
                 loadingTodoById: false,
-                errorTodoById:null
-            }
-        }
+                errorTodoById: null,
+            },
+        };
     }),
     on(loadTodosFailed, (state, {error}) => {
         return {
@@ -59,10 +62,10 @@ const reducer = createReducer(initialState,
                 loaded: false,
                 loadingTodoById: false,
                 errorTodoById: null,
-            }
-        }
+            },
+        };
     }),
-    on(loadTodo, state => {
+    on(loadTodo, (state) => {
         return {
             ...state,
             todoStatus: {
@@ -70,11 +73,11 @@ const reducer = createReducer(initialState,
                 error: null,
                 loaded: false,
                 loadingTodoById: true,
-                errorTodoById: null
-            }
-        }
+                errorTodoById: null,
+            },
+        };
     }),
-    on(loadTodoSuccess, state => {
+    on(loadTodoSuccess, (state) => {
         return {
             ...state,
             todoStatus: {
@@ -82,9 +85,9 @@ const reducer = createReducer(initialState,
                 error: null,
                 loaded: false,
                 loadingTodoById: false,
-                errorTodoById: null
-            }
-        }
+                errorTodoById: null,
+            },
+        };
     }),
     on(loadTodoFailed, (state, {error}) => {
         return {
@@ -94,12 +97,12 @@ const reducer = createReducer(initialState,
                 error: null,
                 loaded: false,
                 loadingTodoById: false,
-                errorTodoById: error
-            }
-        }
+                errorTodoById: error,
+            },
+        };
     }));
 
-export function uiReducer(state: UiState | undefined, action: Action) {
+export function uiReducer(state: IUiState | undefined, action: Action) {
     return reducer(state, action);
 }
 
