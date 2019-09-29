@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+@import './theme';
+
+@include mat-core();
+
+@include angular-material-theme($wonderful-todo-list-theme);
+
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+.absolute-center {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
