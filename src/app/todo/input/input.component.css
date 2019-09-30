@@ -1,0 +1,8 @@
+.form-todo-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+.form-todo-container > * {
+    width: 30%;
+  }

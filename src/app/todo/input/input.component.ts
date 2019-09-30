@@ -9,20 +9,22 @@ import {ITodo} from "../todo-api.service";
 @Component({
     selector: "app-todo-input",
     template: `
+    <div class="form-todo-container">
         <form [formGroup]="form" (submit)="onSubmit()">
 
         <mat-form-field>
             <input matInput placeholder="Todo's title" formControlName="todo">
+            <mat-error>Required !</mat-error>
         </mat-form-field>
-
         <mat-form-field>
             <input matInput placeholder="Todo's description" formControlName="description">
         </mat-form-field>
-
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Add</button>
+        <button class="todoButtonAdd" mat-icon-button color="primary" type="submit" [disabled]="form.invalid"><mat-icon>create</mat-icon></button>
 
         </form>
+    <div>
     `,
+    styleUrls: ["./input.component.css"],
 })
 export class InputComponent {
 
