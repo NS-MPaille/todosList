@@ -1,21 +1,20 @@
 <div class="todoListDiv">
   <ng-container *ngIf="todoStatus$ | async as todoStatus">
-    <mat-list *ngIf="todoStatus.loaded" >
+    <mat-list *ngIf="todoStatus === IStatus.Loaded" >
       <mat-list-item *ngFor="let todo of todo$ | async; trackBy: trackByTodo"  [ngClass]="{completed: todo.completed}" >
         <div class="todoListItemDiv">
           <button mat-button 
             [routerLink]="['/detail', todo.id]"> <div class="test"><h4>{{ todo.title }}</h4></div>
           </button>
         </div>
-        <mat-checkbox type="checkbox" *ngIf="!todo.completed" (click)="onDone(todo)"></mat-checkbox>
-        <mat-checkbox type="checkbox" *ngIf="todo.completed" (click)="onDone(todo)" [checked]= "true"></mat-checkbox>
+        <mat-checkbox type="checkbox" [checked]= "isDone(todo)" (change)="onDone(todo)"></mat-checkbox>
         <button mat-icon-button color="error" (click)="onDelete(todo)"><mat-icon>delete_forever</mat-icon></button>
       </mat-list-item>
     </mat-list>
-    <div  *ngIf="todoStatus.loading">
+    <div  *ngIf="todoStatus === IStatus.Loading">
       <mat-spinner>
       </mat-spinner>
     </div>
-    <div  *ngIf="todoStatus.error">ERROR YOU MAY DIE</div>
+    <div  *ngIf="todoStatus === IStatus.Error">ERROR YOU MAY DIE</div>
   </ng-container>
 </div>

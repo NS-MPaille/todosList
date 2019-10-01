@@ -1,9 +1,8 @@
-import { HttpErrorResponse } from "@angular/common/http";
-import { inject, TestBed } from "@angular/core/testing";
+import { TestBed } from "@angular/core/testing";
 import { provideMockActions } from "@ngrx/effects/testing";
 import { cold, hot } from "jasmine-marbles";
 import { Observable, of } from "rxjs";
-import { loadTodos, loadTodosFailed, loadTodosSuccess } from "../actions/todo.actions";
+import { loadTodos, loadTodosSuccess } from "../actions/todo.actions";
 import { ITodo, TodoApiService } from "../todo-api.service";
 import { TodoEffects } from "./todo.effects";
 

@@ -1,0 +1,14 @@
+<div class="form-todo-container">
+    <form [formGroup]="form" (submit)="onSubmit()">
+
+    <mat-form-field>
+        <input matInput placeholder="Todo's title" formControlName="todo" required>
+        <mat-error>Required !</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput placeholder="Todo's description" formControlName="description">
+    </mat-form-field>
+    <button class="todoButtonAdd" mat-icon-button color="primary" type="submit" [disabled]="form.invalid"><mat-icon>create</mat-icon></button>
+
+    </form>
+<div>

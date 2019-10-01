@@ -4,14 +4,13 @@ import {
     loadTodo, loadTodoFailed, loadTodos,
     loadTodosFailed, loadTodosSuccess, loadTodoSuccess
 } from "../actions/todo.actions";
-import { ITodo } from "../todo-api.service";
 
-export interface IStatus {
-    loading: boolean;
-    error: Error | null;
-    loaded: boolean;
-    loadingTodoById: boolean;
-    errorTodoById: Error | null;
+
+export enum IStatus {
+    NotLoaded,
+    Loading, 
+    Loaded, 
+    Error
 }
 
 export interface IUiState {
@@ -19,86 +18,46 @@ export interface IUiState {
 }
 
 export const initialState: IUiState = {
-    todoStatus: {
-        loading: false,
-        loaded: false,
-        loadingTodoById: false,
-        errorTodoById: null,
-        error: null,
-    },
+    todoStatus: IStatus.NotLoaded,
 };
+
+
 
 const reducer = createReducer(initialState,
     on(loadTodos, (state) => {
         return {
             ...state,
-            todoStatus: {
-                loading: true,
-                error: null,
-                loaded: false,
-                loadingTodoById: false,
-                errorTodoById: null,
-            },
+            todoStatus: IStatus.Loading,
         };
     }),
     on(loadTodosSuccess, (state) => {
         return {
             ...state,
-            todoStatus: {
-                loading: false,
-                error: null,
-                loaded: true,
-                loadingTodoById: false,
-                errorTodoById: null,
-            },
+            todoStatus: IStatus.Loaded,
         };
     }),
     on(loadTodosFailed, (state, {error}) => {
         return {
             ...state,
-            todoStatus: {
-                loading: false,
-                error,
-                loaded: false,
-                loadingTodoById: false,
-                errorTodoById: null,
-            },
+            todoStatus: IStatus.Error,
         };
     }),
     on(loadTodo, (state) => {
         return {
             ...state,
-            todoStatus: {
-                loading: false,
-                error: null,
-                loaded: false,
-                loadingTodoById: true,
-                errorTodoById: null,
-            },
+            todoStatus: IStatus.Loading,
         };
     }),
     on(loadTodoSuccess, (state) => {
         return {
             ...state,
-            todoStatus: {
-                loading: false,
-                error: null,
-                loaded: false,
-                loadingTodoById: false,
-                errorTodoById: null,
-            },
+            todoStatus: IStatus.Loaded,
         };
     }),
     on(loadTodoFailed, (state, {error}) => {
         return {
             ...state,
-            todoStatus: {
-                loading: false,
-                error: null,
-                loaded: false,
-                loadingTodoById: false,
-                errorTodoById: error,
-            },
+            todoStatus: IStatus.Error,
         };
     }));
 

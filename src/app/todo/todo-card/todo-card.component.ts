@@ -5,7 +5,7 @@ import { combineLatest, Observable } from "rxjs";
 import { filter, first, map, switchMap, switchMapTo } from "rxjs/operators";
 import { loadTodo } from "../actions/todo.actions";
 import { IState } from "../reducers";
-import { getTodoById, getTodoIds, getTodos, getTodoState } from "../selectors";
+import { getTodoById, getTodoState } from "../selectors";
 import { ITodo } from "../todo-api.service";
 
 @Component({
@@ -19,28 +19,28 @@ export class TodoCardComponent implements OnInit {
   public todoError$: Observable<{ changes?: Partial<ITodo>, error: number }>;
   public noTodo$: Observable<boolean>;
 
-  private todoId$ = this.ActivatedRoute.params.pipe(
+  private todoId$ = this.activatedRoute.params.pipe(
     map((params) => params.id),
   );
 
 
-  constructor(private ActivatedRoute: ActivatedRoute,
-              private Store: Store<IState>,
-              private Router: Router) {
+  constructor(private activatedRoute: ActivatedRoute,
+              private store: Store<IState>,
+              private router: Router) {
       this.todo$ = this.todoId$.pipe(
-        switchMap((todoId) => this.Store.pipe(
+        switchMap((todoId) => this.store.pipe(
           select(getTodoById),
           map((todoById) => todoById[todoId]),
         )),
       );
       this.isLoading$ = this.todoId$.pipe(
-        switchMap((todoId) => this.Store.pipe(
+        switchMap((todoId) => this.store.pipe(
           select(getTodoState),
           map((todoLoadingById) => todoLoadingById[todoId]),
         )),
       );
       this.todoError$ = this.todoId$.pipe(
-        switchMap((todoId) => this.Store.pipe(
+        switchMap((todoId) => this.store.pipe(
           select(getTodoState),
           map((todoErrorById) => todoErrorById[todoId]),
         )),
@@ -64,11 +64,11 @@ export class TodoCardComponent implements OnInit {
       filter((todo) => !todo),
       switchMapTo(this.todoId$.pipe(first())),
     ).subscribe((todoId) => {
-      this.Store.dispatch(loadTodo(todoId));
+      this.store.dispatch(loadTodo(todoId));
     });
   }
 
   public goToList() {
-    this.Router.navigate(["/todos"]);
+    this.router.navigate(["/todos"]);
   }
 }

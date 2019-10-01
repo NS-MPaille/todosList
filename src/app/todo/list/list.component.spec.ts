@@ -12,7 +12,7 @@ import {
   MatListModule,
   MatProgressSpinnerModule,
 } from "@angular/material";
-import { loadTodoSuccess, loadTodosSuccess } from '../actions/todo.actions';
+import { loadTodosSuccess } from '../actions/todo.actions';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
