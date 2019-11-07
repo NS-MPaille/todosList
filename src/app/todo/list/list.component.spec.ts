@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { combineReducers, Store, StoreModule } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { ListComponent } from './list.component';
-import { todoReducer } from '../reducers/todo.reducer';
+import { IStatus } from '../reducers/ui.reducer';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -12,24 +12,24 @@ import {
   MatListModule,
   MatProgressSpinnerModule,
 } from "@angular/material";
-import { loadTodosSuccess } from '../actions/todo.actions';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { Subject, BehaviorSubject } from 'rxjs';
+import { ITodo } from '../todo-api.service';
+import { getTodos, getTodosStatus } from '../selectors';
 
 describe('ListComponent', () => {
   let component: ListComponent;
   let fixture: ComponentFixture<ListComponent>;
-  let store: Store<any>;
+  const todoSelect: Subject<ITodo[]> = new BehaviorSubject([]);
+  const todoStatusSelect: Subject<IStatus> = new BehaviorSubject(IStatus.Loading);
 
   beforeEach(async () => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        StoreModule.forRoot({
-          'module-todo': combineReducers(todoReducer)
-        }),
         MatInputModule,
         MatIconModule,
         MatListModule,
@@ -42,7 +42,21 @@ describe('ListComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
       ],
-      declarations: [ListComponent]
+      declarations: [ListComponent],
+      providers: [
+        {
+          provide: Store,
+          useValue: {
+            select: (method) => {
+              if (method === getTodos) {
+                return todoSelect;
+              } else if (method === getTodosStatus) {
+                return todoStatusSelect;
+              }
+            }
+          }
+        }
+      ]
     });
 
     await TestBed.compileComponents();
@@ -51,33 +65,45 @@ describe('ListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ListComponent);
     component = fixture.componentInstance;
-    store = TestBed.get(Store);
-
-    spyOn(store, 'dispatch').and.callThrough();
     fixture.detectChanges();
   });
-  
+ 
   afterEach(() => {
     fixture.destroy();
   });
 
-  it('The todoList component should be created', () => {
-    const action = loadTodosSuccess(
-        {
-            data:
-                [{
-                    id: 1,
-                    title: 'Test',
-                    description: '',
-                    completed: false
-                }]
-            });
-
-    store.dispatch(action);
+  it('The todoList item Test should be created', () => {
+    todoSelect.next(
+      [{
+          id: 1,
+          title: 'Test',
+          description: '',
+          completed: false
+      }]);
+    todoStatusSelect.next(IStatus.Loaded);
 
     fixture.detectChanges();
 
-    const TodoElement = fixture.nativeElement.querySelector('div');
+    const TodoElement = fixture.nativeElement.querySelector('.todoListItemDiv');
     expect(TodoElement).toBeTruthy;
+    const button = TodoElement.querySelector('button');
+    expect(button.textContent).toBe('Test');
+  });
+
+  it('The deleted todoList item Test should not exist', () => {
+    todoSelect.next(
+      [{
+          id: 1,
+          title: 'Test',
+          description: '',
+          completed: false
+      }]);
+    todoStatusSelect.next(IStatus.Loaded);
+    todoSelect.next([]);
+
+    fixture.detectChanges();
+
+    const TodoElement = fixture.nativeElement.querySelector('.todoListItemDiv');
+    expect(TodoElement).toBeNull;
   });
 });
