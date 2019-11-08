@@ -2,15 +2,15 @@ import {createReducer, on} from "@ngrx/store";
 import {Action} from "@ngrx/store";
 import {
     loadTodo, loadTodoFailed, loadTodos,
-    loadTodosFailed, loadTodosSuccess, loadTodoSuccess
+    loadTodosFailed, loadTodosSuccess, loadTodoSuccess,
 } from "../actions/todo.actions";
 
 
 export enum IStatus {
     NotLoaded,
-    Loading, 
-    Loaded, 
-    Error
+    Loading,
+    Loaded,
+    Error,
 }
 
 export interface IUiState {

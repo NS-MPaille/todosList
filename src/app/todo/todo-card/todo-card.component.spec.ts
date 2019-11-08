@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { combineReducers, Store, StoreModule } from '@ngrx/store';
-import { todoReducer } from '../reducers/todo.reducer';
+import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { ReactiveFormsModule } from "@angular/forms";
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -11,13 +11,13 @@ import {
   MatListModule,
   MatProgressSpinnerModule,
 } from "@angular/material";
-import { RouterModule } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { TodoCardComponent } from './todo-card.component';
+import { RouterModule } from "@angular/router";
+import { RouterTestingModule } from "@angular/router/testing";
+import { combineReducers, Store, StoreModule } from "@ngrx/store";
+import { todoReducer } from "../reducers/todo.reducer";
+import { TodoCardComponent } from "./todo-card.component";
 
-describe('TodoCardComponent', () => {
+describe("TodoCardComponent", () => {
   let component: TodoCardComponent;
   let fixture: ComponentFixture<TodoCardComponent>;
   let store: Store<any>;
@@ -27,7 +27,7 @@ describe('TodoCardComponent', () => {
       imports: [
         RouterTestingModule,
         StoreModule.forRoot({
-          'module-todo': combineReducers(todoReducer)
+          "module-todo": combineReducers(todoReducer),
         }),
         MatInputModule,
         MatIconModule,
@@ -41,7 +41,7 @@ describe('TodoCardComponent', () => {
         ReactiveFormsModule,
         HttpClientModule,
       ],
-      declarations: [TodoCardComponent]
+      declarations: [TodoCardComponent],
     });
 
     await TestBed.compileComponents();
@@ -51,13 +51,13 @@ describe('TodoCardComponent', () => {
     fixture.destroy();
   });
 
-  it('The TodoCard component should be created', () => {
+  it("The TodoCard component should be created", () => {
     fixture = TestBed.createComponent(TodoCardComponent);
     component = fixture.componentInstance;
     store = TestBed.get(Store);
 
-    spyOn(store, 'dispatch').and.callThrough();
+    spyOn(store, "dispatch").and.callThrough();
     fixture.detectChanges();
-    expect(TodoCardComponent).toBeTruthy
+    expect(TodoCardComponent).toBeTruthy;
   });
 });

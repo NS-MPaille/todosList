@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { Update } from "@ngrx/entity";
 import { Store } from "@ngrx/store";
 import {Observable} from "rxjs";
@@ -7,7 +8,6 @@ import {IState} from "../reducers";
 import {IStatus} from "../reducers/ui.reducer";
 import {getTodos, getTodosStatus} from "../selectors";
 import {ITodo} from "../todo-api.service";
-import { FormControl } from '@angular/forms';
 
 @Component({
   selector: "app-todo-list",
@@ -16,11 +16,11 @@ import { FormControl } from '@angular/forms';
 })
 export class ListComponent implements OnInit {
 
-  IStatus = IStatus;
+  public IStatus = IStatus;
 
   public todo$: Observable<ITodo[]>;
   public todoStatus$: Observable<IStatus>;
-  todoControl = new FormControl();
+  public todoControl = new FormControl();
 
   constructor(private store: Store<IState>) {
     this.todo$ = this.store.select(getTodos);

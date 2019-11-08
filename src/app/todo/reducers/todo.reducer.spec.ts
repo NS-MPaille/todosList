@@ -1,4 +1,4 @@
-import { loadTodosSuccess, loadTodoSuccess, addTodo, deleteTodo, updateTodo } from "../actions/todo.actions";
+import { addTodo, deleteTodo, loadTodosSuccess, loadTodoSuccess, updateTodo } from "../actions/todo.actions";
 import { getAllTodos, initialState, todoReducer } from "./todo.reducer";
 describe("[Todo] Todo Reducer", () => {
     it("should add new todos", () => {
@@ -35,7 +35,7 @@ describe("[Todo] Todo Reducer", () => {
           title: "Test",
           description: "",
           completed: false,
-        }
+        },
       });
 
       const result = todoReducer(initialState, action);
@@ -49,7 +49,7 @@ describe("[Todo] Todo Reducer", () => {
           title: "Test",
           description: "",
           completed: false,
-        }
+        },
       });
 
       const result = todoReducer(initialState, action);
@@ -77,7 +77,7 @@ describe("[Todo] Todo Reducer", () => {
       },
     ]});
 
-      const actionDelete = deleteTodo({id:1})
+      const actionDelete = deleteTodo({id: 1});
 
       const reducedTestAdded = todoReducer(initialState, actionAdd);
       const result = todoReducer(reducedTestAdded, actionDelete);
@@ -91,18 +91,18 @@ describe("[Todo] Todo Reducer", () => {
           title: "Test",
           description: "",
           completed: false,
-        }
+        },
       });
 
-      const actionUpdate = updateTodo({todoUpdate:{
-        id:1,
+      const actionUpdate = updateTodo({todoUpdate: {
+        id: 1,
         changes:  {
           id: 1,
           title: "Test",
           description: "",
           completed: true,
         },
-      }})
+      }});
 
       const reducedTestAdded = todoReducer(initialState, action);
       const result = todoReducer(reducedTestAdded, actionUpdate);

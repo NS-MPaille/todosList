@@ -1,5 +1,5 @@
 import { loadTodos, loadTodosFailed, loadTodosSuccess } from "../actions/todo.actions";
-import { initialState, uiReducer, IStatus } from "./ui.reducer";
+import { initialState, IStatus, uiReducer } from "./ui.reducer";
 
 describe("[Todo] Ui Reducer", () => {
   describe("LoadTodos", () => {

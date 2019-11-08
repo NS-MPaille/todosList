@@ -1,6 +1,6 @@
 import { ActionReducerMap } from "@ngrx/store";
-import {todoReducer, ITodoState} from "./todo.reducer";
-import {uiReducer, IUiState} from "./ui.reducer";
+import {ITodoState, todoReducer} from "./todo.reducer";
+import {IUiState, uiReducer} from "./ui.reducer";
 
 export const todoFeatureKey = "module-todo";
 
