@@ -85,7 +85,7 @@ describe("ListComponent", () => {
     fixture.detectChanges();
 
     const TodoElement = fixture.nativeElement.querySelector(".todoListItemDiv");
-    expect(TodoElement).toBeTruthy;
+    expect(TodoElement).toBeTruthy();
     const button = TodoElement.querySelector("button");
     expect(button.textContent).toBe("Test");
   });

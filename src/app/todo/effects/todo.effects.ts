@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Actions, createEffect, ofType } from "@ngrx/effects";
+import { Actions, createEffect, ofType, ROOT_EFFECTS_INIT } from "@ngrx/effects";
 
 import { of } from "rxjs";
 import { catchError, map, mergeMap, switchMap } from "rxjs/operators";
@@ -15,6 +15,12 @@ import { TodoApiService } from "../todo-api.service";
 
 @Injectable()
 export class TodoEffects {
+
+  public init$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ROOT_EFFECTS_INIT),
+      map(actions => loadTodos)
+    ));
 
   public loadTodos$ = createEffect(() =>
     this.actions$.pipe(

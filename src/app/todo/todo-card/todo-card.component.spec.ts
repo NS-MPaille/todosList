@@ -58,6 +58,6 @@ describe("TodoCardComponent", () => {
 
     spyOn(store, "dispatch").and.callThrough();
     fixture.detectChanges();
-    expect(TodoCardComponent).toBeTruthy;
+    expect(TodoCardComponent).toBeTruthy();
   });
 });

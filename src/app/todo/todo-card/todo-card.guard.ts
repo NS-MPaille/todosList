@@ -18,7 +18,9 @@ export class CanActivateCardGuard implements CanActivate {
     return this.store.select(getTodoById).pipe(
       map((todoById) => {
         const id = route.paramMap.get("id");
-        return id in todoById;
+        if (id !== null) {
+          return id in todoById;
+        }
       }),
     );
   }

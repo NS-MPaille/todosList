@@ -106,7 +106,7 @@ describe("[Todo] Todo Reducer", () => {
 
       const reducedTestAdded = todoReducer(initialState, action);
       const result = todoReducer(reducedTestAdded, actionUpdate);
-      expect(getAllTodos(result)[0].completed).toBeTruthy;
+      expect(getAllTodos(result)[0].completed).toBeTruthy();
 
     });
 });
