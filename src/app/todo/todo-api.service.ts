@@ -57,8 +57,8 @@ export class TodoApiService {
   constructor(private http: HttpClient) {}
 
   public getList(): Observable<ITodo[]> {
-    // return this.http.get<Todo[]>('todos');
-    return of(this.todosDb).pipe(delay(1000));
+    // return of(this.todosDb).pipe(delay(1000)) //- To test with delay;
+    return of(this.todosDb);
   }
 
 

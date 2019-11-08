@@ -16,15 +16,9 @@ import { TodoApiService } from "../todo-api.service";
 @Injectable()
 export class TodoEffects {
 
-  public init$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(ROOT_EFFECTS_INIT),
-      map(actions => loadTodos)
-    ));
-
   public loadTodos$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadTodos),
+      ofType(loadTodos, ROOT_EFFECTS_INIT),
       switchMap(() => this.todoApi.getList().pipe(
         map((todos) => loadTodosSuccess({ data: todos })),
         catchError((error) => of(loadTodosFailed({ error }))),

@@ -3,20 +3,20 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { RouterModule, Routes } from "@angular/router";
 
+import { CommonModule } from "@angular/common";
+import { HttpClientModule } from "@angular/common/http";
+import { MatButtonModule, MatCheckboxModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatProgressSpinnerModule } from "@angular/material";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { EffectsModule } from "@ngrx/effects";
 import { StoreModule } from "@ngrx/store";
 import { StoreDevtoolsModule } from "@ngrx/store-devtools";
 import { AppComponent } from "./app.component";
+import { TodoEffects } from "./todo/effects/todo.effects";
+import { InputComponent } from "./todo/input/input.component";
+import { ListComponent } from "./todo/list/list.component";
+import { moduleTodoReducer, todoFeatureKey } from "./todo/reducers";
 import { TodoCardComponent } from "./todo/todo-card/todo-card.component";
-import { ListComponent } from './todo/list/list.component';
-import { CanActivateCardGuard } from './todo/todo-card/todo-card.guard';
-import { InputComponent } from './todo/input/input.component';
-import { MatInputModule, MatIconModule, MatListModule, MatButtonModule, MatFormFieldModule, MatProgressSpinnerModule, MatCheckboxModule } from '@angular/material';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { todoFeatureKey, moduleTodoReducer } from './todo/reducers';
-import { TodoEffects } from './todo/effects/todo.effects';
+import { CanActivateCardGuard } from "./todo/todo-card/todo-card.guard";
 
 export const TODO_ROUTES: Routes = [
   {
@@ -57,7 +57,7 @@ export const TODO_ROUTES: Routes = [
       },
     }),
     StoreDevtoolsModule.instrument(),
-    EffectsModule.forRoot([]),
+    EffectsModule.forRoot([TodoEffects]),
     BrowserAnimationsModule,
   ],
   bootstrap: [AppComponent],
